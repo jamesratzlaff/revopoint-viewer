@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 import argparse
 
+import open3d as o3d
+
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('-p','--param_dir', help="the name of the 'param' dir relative to the basepath",default='param')
 arg_parser.add_argument('-c','--cache_dir', help="the name of the 'cache' dir relative to the basepath", default='cache')
@@ -95,7 +97,7 @@ def load_frame(filename):
 
     return data
 
-depth_files = cache_dir.absolute().glob("*.dph")
+depth_files = cache_dir.absolute().glob("frame_005_*.dph")
 
 # load demo frames and merge them into one point cloud
 data = np.concatenate(
@@ -121,7 +123,18 @@ data = np.concatenate(
 0)
 
 # display result
-import open3d as o3d
 pcd = o3d.geometry.PointCloud()
 pcd.points = o3d.utility.Vector3dVector(data)
-o3d.visualization.draw_geometries([pcd])
+vwe = o3d.visualization.VisualizerWithEditing()
+#o3d.visualization.gui.Application.instance.initialize()
+#window = o3d.visualization.gui.Application.instance.create_window("Add Spheres Example", 1024, 768)
+#scene = o3d.visualization.gui.SceneWidget()
+#scene.scene = o3d.visualization.rendering.Open3DScene(window.renderer)
+#window.add_child(vwe.create_window())
+#scene.scene.add_geometry(pcd)
+vwe.create_window()
+vwe.add_geometry(pcd)
+vwe.run()
+#o3d.visualization.gui.Application.instance.run()
+
+#o3d.visualization.draw_geometries_with_editing([pcd])
