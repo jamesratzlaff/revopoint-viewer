@@ -97,7 +97,7 @@ def load_frame(filename):
 
     return data
 
-depth_files = cache_dir.absolute().glob("frame_005_*.dph")
+depth_files = cache_dir.absolute().glob("*.dph")
 
 # load demo frames and merge them into one point cloud
 data = np.concatenate(
