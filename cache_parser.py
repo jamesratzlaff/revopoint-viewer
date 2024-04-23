@@ -2,6 +2,9 @@
 import numpy as np
 import json
 
+base_path="."
+param_dir="param"
+cache_dir="cache"
 
 def from_json(json,*keys):
     current = json
